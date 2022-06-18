@@ -1,0 +1,32 @@
+{
+  "name": "lesson_2.1",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon",
+    "migration_gen": "docker exec -it server npx ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate models/database/migrations/${name} -d ./ormconfig.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/hapi": "^18.0.7",
+    "@types/hapi__hapi": "^20.0.12",
+    "@types/hapi__inert": "^5.2.3",
+    "@types/hapi__vision": "^5.5.3",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/vision": "^6.1.0",
+    "hapi-swagger": "^14.5.4",
+    "joi": "^17.6.0",
+    "pg": "^8.7.3",
+    "typeorm": "^0.3.6"
+  }
+}
