@@ -1,10 +1,9 @@
-FROM node:16.15.1-alpine
+FROM node:14.15
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --location=global npm@8.12.2
 RUN npm install
 
 COPY . .

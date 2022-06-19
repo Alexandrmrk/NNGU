@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "sourceMap": true,
+    "lib": ["es5", "es6"],
+    "target": "es6",
     "strictNullChecks": true,
     "module": "commonjs",
-    "target": "es2019",
-    "allowJs": false,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "outDir": "build",
     "emitDecoratorMetadata": true,
-    "lib": ["es2019"],
-    "typeRoots": ["../node_modules/@types", "../@types/"]
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types"],
+    "sourceMap": false,
+    "types": ["node"]
   },
-  "exclude": ["node_modules"]
+  "include": ["."],
+  "exclude": ["./node_modules", "build"]
 }
