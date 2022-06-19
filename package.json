@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon",
-    "migration_gen": "docker exec -it server npx ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate models/database/migrations/${name} -d ./ormconfig.ts"
+    "migration_gen": "docker exec -it server npx ts-node ./node_modules/typeorm/cli migration:generate models/database/migrations/${name} -d ./ormconfig.ts",
+    "migration_create": "docker exec -it server npx ts-node ./node_modules/typeorm/cli migration:create models/database/migrations/${name}"
   },
   "author": "",
   "license": "ISC",
