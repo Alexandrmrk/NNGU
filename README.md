@@ -13,5 +13,5 @@
 - `docker-compose start` - запускает любые остановленные сервисы в соответствии с параметрами остановленной конфигурации, указанными в файле `docker-compose.yml`.
 - `docker-compose down` - останавливает все сервисы, связанные с определённой конфигурацией `docker-compose.yml`. В отличие от команды stop, она также удаляет все контейнеры и внутренние сети, связанные с этими сервисами — но НЕ указанные внутри тома. Чтобы очистить и их, надо дополнить команду down флагом -v.
 
-- `name=migration-name` npm run migration_create - создает пустую миграцию
-- `name=migration-name` npm run migration_gen - генерирует миграцию
+- `name=migration-name npm run migration_create` - создает пустую миграцию
+- `name=migration-name npm run migration_gen` - генерирует миграцию
