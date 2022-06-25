@@ -1,5 +1,5 @@
-import dataSourse from '../../../ormconfig';
-import User from '../entity/User';
+import dataSourse from '../../../../ormconfig';
+import User from '../../entity/User';
 import { IUserCreateParams, IUserFindParams } from './interfaces';
 
 const UserRepository = {
@@ -11,7 +11,6 @@ const UserRepository = {
     const user = await userRepo.save({
       firstName,
       lastName,
-      isActive: false,
     });
 
     const response = await userRepo.findOne({

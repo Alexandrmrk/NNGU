@@ -1,5 +1,5 @@
 import * as Boom from '@hapi/boom';
-import UserRepository from '../models/database/repository';
+import UserRepository from '../../models/database/repository/User';
 import { CreateTestRequest, FindTestRequest } from './interfaces';
 
 export default {
@@ -14,6 +14,7 @@ export default {
   },
   findUser: async (request: FindTestRequest) => {
     try {
+      console.log(request.auth.credentials);
       return UserRepository.find(request.query);
     } catch (error) {
       console.error(`UserRepository.find(): ${error.message}`);
