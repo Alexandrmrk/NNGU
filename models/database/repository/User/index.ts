@@ -1,5 +1,5 @@
-import dataSourse from '../../../ormconfig';
-import User from '../entity/User';
+import dataSourse from '../../../../ormconfig';
+import User from '../../entity/User';
 import { IUserCreateParams, IUserFindParams } from './interfaces';
 
 const UserRepository = {
@@ -11,7 +11,6 @@ const UserRepository = {
     const user = await userRepo.save({
       firstName,
       lastName,
-      isActive: false,
     });
 
     const response = await userRepo.findOne({
@@ -30,12 +29,12 @@ const UserRepository = {
     const { offset, limit, firstName } = params;
 
     const conditions = dataSourse
-      .createQueryBuilder(User, 'test')
-      .offset(offset)
-      .limit(limit);
+      .createQueryBuilder(User, 'user')
+      .skip(offset)
+      .take(limit);
 
     if (firstName) {
-      conditions.where('test.firstName ILIKE :firstName', {
+      conditions.where('user.firstName ILIKE :firstName', {
         firstName: `%${firstName}%`,
       });
     }

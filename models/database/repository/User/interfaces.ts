@@ -1,7 +1,4 @@
-export interface IPagination {
-  limit: number;
-  offset: number;
-}
+import { IPagination } from '../../../../common/interfaces';
 
 interface IUser {
   id: number;

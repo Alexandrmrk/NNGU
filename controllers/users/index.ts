@@ -1,5 +1,5 @@
 import * as Boom from '@hapi/boom';
-import UserRepository from '../models/database/repository';
+import UserRepository from '../../models/database/repository/User';
 import { CreateTestRequest, FindTestRequest } from './interfaces';
 
 export default {

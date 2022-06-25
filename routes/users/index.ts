@@ -1,4 +1,4 @@
-import controllers from '../../controllers';
+import controllers from '../../controllers/users';
 import * as Hapi from '@hapi/hapi';
 import * as options from '../users/options';
 

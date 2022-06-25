@@ -1,10 +1,9 @@
-import * as Hapi from '@hapi/hapi';
+import { Decorate } from '../../common/interfaces';
+
 import {
   IUserCreateParams,
   IUserFindParams,
-} from '../models/database/repository/interfaces';
-
-type Decorate<T> = Readonly<T> & Hapi.Request;
+} from '../../models/database/repository/User/interfaces';
 
 export type CreateTestRequest = Decorate<{
   payload: IUserCreateParams;
