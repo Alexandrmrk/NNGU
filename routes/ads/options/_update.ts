@@ -7,13 +7,14 @@ export const update: RouteOptions = {
   tags: ['api', 'ad'],
   validate: {
     payload: Joi.object({
-      id: Joi.number().required(),
+      id: Joi.number().required().example(1),
       title: Joi.string().description('заголовок'),
       description: Joi.string().description('описание'),
       cost: Joi.string().description('стоимость'),
       phone: Joi.string().description('номер телефона'),
       address: Joi.string().description('стоимость'),
-      categories: Joi.array()
+      categoryIds: Joi.array()
+        .single()
         .items(Joi.number())
         .description('категории фильтров'),
     }),

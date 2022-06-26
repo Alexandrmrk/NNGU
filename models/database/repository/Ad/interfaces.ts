@@ -1,33 +1,28 @@
 import { IPagination } from '../../../../common/interfaces';
-import { ICategory } from '../Category/interfaces';
+import { ICategory, ICategoryIds } from '../Category/interfaces';
 
-interface IAd {
-  id: number;
+interface IAdBase {
   title: string;
   description: string;
   cost: string;
   phone: string;
   address: string;
-  publicDate: string;
-  viewCount: number;
-  isVisible: boolean;
-  categories: ICategory[];
-  created: Date;
-  updated: Date;
-  deleted: Date;
 }
 
-export type IAdCreateParams = Pick<
-  IAd,
-  'title' | 'description' | 'cost' | 'phone' | 'address' | 'categories'
->;
+export interface IAdCreateParams extends IAdBase {
+  categoryIds?: number[];
+}
 
-export type IAdFindParams = Partial<Pick<IAd, 'title' | 'categories'>> &
-  IPagination;
+export interface IAdFindParams extends IPagination {
+  title?: string;
+  categoryIds?: number[];
+}
 
-export type IAdUpdateParams = Pick<
-  IAd,
-  'id' | 'title' | 'description' | 'cost' | 'phone' | 'address' | 'categories'
->;
+export type IAdUpdateParams = Partial<IAdBase> & {
+  id: number;
+  categoryIds?: number[];
+};
 
-export type IAdSoftDeleteParams = Pick<IAd, 'id'>;
+export interface IAdSoftDeleteParams {
+  id: number;
+}

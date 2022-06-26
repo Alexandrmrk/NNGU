@@ -10,20 +10,23 @@ import {
 
 const AdRepository = {
   create: async (params: IAdCreateParams) => {
-    const { categories: categoryIds } = params;
-
+    const { categoryIds } = params;
     const adRepo = dataSourse.getRepository(Ad);
     const categoryRepo = dataSourse.getRepository(Category);
 
-    const foundCategories = await categoryRepo
-      .createQueryBuilder('category')
-      .where('category.id IN (:...ids)', { ids: categoryIds })
-      .getMany();
+    let categories: Category[] = [];
+    if (categoryIds) {
+      categories = await categoryRepo
+        .createQueryBuilder('category')
+        .where('category.id IN (:...ids)', { ids: categoryIds })
+        .getMany();
+    }
 
-    const ad = await adRepo.save({ ...params, categories: foundCategories });
+    const ad = await adRepo.save({ ...params, categories });
 
     const response = await adRepo.findOne({
-      select: ['id', 'title', 'description'],
+      select: ['id', 'title', 'description', 'cost', 'phone', 'address'],
+      relations: ['categories'],
       where: { id: ad.id },
     });
 
@@ -35,7 +38,7 @@ const AdRepository = {
   },
 
   find: async (params: IAdFindParams) => {
-    const { title, categories, limit, offset } = params;
+    const { title, categoryIds, limit, offset } = params;
     const adRepo = dataSourse.getRepository(Ad);
 
     const conditions = adRepo.createQueryBuilder('ad').skip(offset).take(limit);
@@ -44,7 +47,7 @@ const AdRepository = {
       conditions.where(`ad.title = :title`, { title });
     }
 
-    if (categories) {
+    if (categoryIds) {
       conditions.andWhere((qb) => {
         const subQuery = qb
           .subQuery()
@@ -52,11 +55,11 @@ const AdRepository = {
           .from(Ad, 'ad')
           .leftJoin('ad.categories', 'category')
           .andWhere('category.id IN (:...categoryIds)', {
-            categoryIds: categories,
+            categoryIds,
           })
           .groupBy('ad.id')
           .having('COUNT(ad.id) = :countCategories', {
-            countCategories: categories.length,
+            countCategories: categoryIds.length,
           });
 
         return `ad.id IN ${subQuery.getQuery()}`;
@@ -72,7 +75,7 @@ const AdRepository = {
   },
 
   update: async (params: IAdUpdateParams) => {
-    const { id, categories, ...rest } = params;
+    const { id, categoryIds, ...rest } = params;
 
     const adRepo = dataSourse.getRepository(Ad);
     const ad = await adRepo.findOne({ where: { id } });
@@ -83,17 +86,17 @@ const AdRepository = {
 
     const categoryRepo = dataSourse.getRepository(Category);
 
-    if (categories) {
-      if (categories.length) {
-        const foundCategories = await categoryRepo
-          .createQueryBuilder('category')
-          .where('category.id IN (:...ids)', { ids: categories })
-          .getMany();
+    if (categoryIds) {
+      let categories: Category[] = [];
 
-        adRepo.merge(ad, { categories: foundCategories });
-      } else {
-        adRepo.merge(ad, { categories: [] });
+      if (categoryIds.length) {
+        categories = await categoryRepo
+          .createQueryBuilder('category')
+          .where('category.id IN (:...categoryIds)', { categoryIds })
+          .getMany();
       }
+
+      adRepo.merge(ad, { categories });
     }
 
     adRepo.merge(ad, { ...rest });
@@ -101,6 +104,8 @@ const AdRepository = {
     await adRepo.save(ad);
 
     const response = await adRepo.findOne({
+      select: ['id', 'title', 'description', 'cost', 'phone', 'address'],
+      relations: ['categories'],
       where: { id: ad.id },
     });
 
