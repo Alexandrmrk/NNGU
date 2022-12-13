@@ -8,12 +8,12 @@ export const find: RouteOptions = {
   description: 'Получить пользователей',
   notes: 'Маршрут получения пользователей',
   tags: ['api', 'user'],
-  auth: {
-    strategies: [authStrategy.STATIC],
-    access: {
-      scope: [roles.ADMIN],
-    },
-  },
+  // auth: {
+  //   strategies: [authStrategy.STATIC],
+  //   access: {
+  //     scope: [roles.ADMIN],
+  //   },
+  // },
   validate: {
     query: Joi.object({
       firstName: Joi.string().description('имя пользователя'),

@@ -8,10 +8,13 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import Role from './Role';
 import Session from './Session';
+import Direction from './Direction';
 
 @Entity()
 class User {
@@ -47,6 +50,10 @@ class User {
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
+
+  @ManyToMany(() => Direction, (direction) => direction.users)
+  @JoinTable()
+  directions: Direction[];
 }
 
 export default User;

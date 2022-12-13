@@ -1,5 +1,6 @@
 import dataSourse from '../../../../ormconfig';
 import User from '../../entity/User';
+import Direction from '../../entity/Direction';
 import { IUserCreateParams, IUserFindParams } from './interfaces';
 
 const UserRepository = {
@@ -28,18 +29,8 @@ const UserRepository = {
   find: async (params: IUserFindParams) => {
     const { offset, limit, firstName } = params;
 
-    const conditions = dataSourse
-      .createQueryBuilder(User, 'test')
-      .offset(offset)
-      .limit(limit);
-
-    if (firstName) {
-      conditions.where('test.firstName ILIKE :firstName', {
-        firstName: `%${firstName}%`,
-      });
-    }
-
-    return await conditions.getMany();
+    // return dataSourse.getRepository(Direction).find({ relations: ['users'] });
+     return dataSourse.getRepository(User).find({ relations: ['directions'] });
   },
 };
 
